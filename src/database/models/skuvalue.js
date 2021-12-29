@@ -34,9 +34,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // a single row has only one variant option combination
-      SKUValue.belongsTo( models.VariantOption, { foreignKey: 'optionId', targetKey: 'id' } );
+      SKUValue.belongsTo( models.VariantOption, { foreignKey: 'optionId' } );
       // a single row has only one product variant combination
-      SKUValue.belongsTo( models.ProductVariant, { foreignKey: 'variantId', targetKey: 'id'} );
+      SKUValue.belongsTo( models.ProductVariant, { foreignKey: 'variantId'} );
       // a single row has only one sku combination
       // SKUValue.belongsTo( models.SKU, { foreignKey: 'SKUId', targetKey: 'id' } );
     }

@@ -22,6 +22,7 @@ export default class ProductRepository{
                             include: [
                                 {
                                     model: ProductVariant,
+                                    // as: 'productVarinats',
                                     attributes: []
                                 },
                                 {
@@ -44,9 +45,11 @@ export default class ProductRepository{
                     include: [
                         {
                             model: VariantOption,
+                            as: 'options',
                             attributes: ['name']
                         }
                     ],
+                    as: 'variants',
                     attributes: ['name']
                 }
             ],
@@ -58,7 +61,7 @@ export default class ProductRepository{
     async getAll(){
         const { Product, SKU } = db;
         try{
-            return await Product.findAllAsync({
+            return await Product.findAll({
                 include: [{
                     model: SKU,
                     attributes: []
@@ -69,6 +72,10 @@ export default class ProductRepository{
                 ],
                 group: ['Product.id', 'Product.keywords', 'Product.description', 'Product.hasVariant', 'Product.isActive', 'Product.status']
             });
+
+            // return await Product.findAllAsync({
+            //     attributes: ['id', 'title', 'status', 'description']
+            // });
         }catch(e){
             console.error( e ); 
         }

@@ -11,9 +11,26 @@ export default class InventoryRepository {
      * @returns { Promise } 
      */
     async getAll(){
-        const {SKU, VariantOption, SKUValue} = db;
+        const {SKU, VariantOption, SKUValue, Product, Sequelize} = db;
         try{
-            return await SKU.findAllAsync({
+            // return await SKU.findAllAsync({
+            //     include: [
+            //         {
+            //             model: SKUValue,
+            //             include: [
+            //                 {
+            //                     model: VariantOption,
+            //                     attributes: []
+            //                 },
+            //             ],
+            //             attributes: [[ db.Sequelize.literal('"SKUValues->VariantOption".name') , 'variantName']]
+            //         }
+            //     ],
+            //     attributes: ['id', 'productId', 'skuNumber', 'trackInventory']
+            // });
+
+
+            return await Product.findAllAsync({
                 include: [
                     {
                         model: SKUValue,
@@ -21,12 +38,12 @@ export default class InventoryRepository {
                             {
                                 model: VariantOption,
                                 attributes: []
-                            },
+                            }
                         ],
-                        attributes: [[ db.Sequelize.literal('"SKUValues->VariantOption".name') , 'variantName']]
-                    }
+                        attributes: ['variantId', [Sequelize.literal('"SKUValues->VariantOption"."name"'), 'name']]
+                    }, 
                 ],
-                attributes: ['id', 'productId', 'skuNumber', 'trackInventory']
+                attributes: ['id', 'title']
             });
         }catch(e){
             throw e;
@@ -50,7 +67,7 @@ export default class InventoryRepository {
                 {
                     model: ProductVariant,
                     include: [{
-                        mode: VariantOption,
+                        model: VariantOption,
                         attributes: ['name']
                     }],
                     attrbutes: ['name']

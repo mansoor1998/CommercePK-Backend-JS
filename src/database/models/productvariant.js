@@ -6,6 +6,7 @@ const {
 const { fullAuditEntity } = require('../utilities/auditmodel');
 
 const { v4: uuidv4 } = require('uuid');
+const { SKU } = require('./index');
 
 module.exports = (sequelize, DataTypes) => {
   class ProductVariant extends Model {
@@ -20,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ProductVariant.hasMany( models.VariantOption, { foreignKey: 'variantId' } );
+      // ProductVariant.belongsTo( models.Product, { foreignKey: 'productId', as: 'product' } );
+
+      ProductVariant.hasMany( models.VariantOption, { foreignKey: 'variantId', as: 'options' } );
     }
   };
   ProductVariant.init({

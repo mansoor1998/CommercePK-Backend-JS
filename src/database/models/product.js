@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       // one product has many skus
       Product.hasMany( models.SKU, { foreignKey: 'productId' } ); // one to many relationship
       // prodcut has/might have many variatns
-      Product.hasMany( models.ProductVariant, { foreignKey: 'productId' } );
+      Product.hasMany( models.ProductVariant, { foreignKey: 'productId', as: 'variants' } );
       // Product.belongsTo( models.VariantOption, { foreignKey: 'ProductId' } );
       Product.hasMany( models.SKUValue, { foreignKey: 'productId' } );
     }

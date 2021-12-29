@@ -14,8 +14,9 @@ module.exports = class FullAuditModel extends Model {
      */
     static async findAllAsync(options){
         try{
-            options = {};
+            // const opt = {};
             options.where = (options.where) ? { isDeleted: false, ...options.where } : { isDeleted: false };
+            // if(options?.attributes) opt.attributes = options.attributes;
             return await this.findAll(options);
         }catch(e){
             throw e;
@@ -24,7 +25,7 @@ module.exports = class FullAuditModel extends Model {
 
     /**
      * select first or default with filter options.
-     * @param {import("sequelize").NonNullFindOptions<any>} options - filter where query
+     * @param {object} options - filter where query
      * @return {Promise<FullAuditModel>}
      */
     static async findOneAsync(options){
